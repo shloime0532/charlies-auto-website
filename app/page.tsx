@@ -570,7 +570,7 @@ export default function Home() {
 
           <AnimatedSection>
             {/* Tab buttons */}
-            <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10">
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-3 mb-10">
               {SERVICE_TABS.map((tab) => {
                 const Icon = tab.icon;
                 const isActive = activeTab === tab.id;
@@ -578,14 +578,14 @@ export default function Home() {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center gap-2 px-4 sm:px-6 py-3 rounded-xl font-bold text-sm transition-all ${
+                    className={`flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 px-3 sm:px-6 py-3 rounded-xl font-bold text-xs sm:text-sm transition-all ${
                       isActive
                         ? "bg-primary text-white shadow-lg shadow-primary/30 scale-105"
                         : "bg-white text-text-light hover:bg-primary/5 hover:text-primary border border-border"
                     }`}
                   >
                     <Icon className={`w-5 h-5 ${isActive ? "text-white" : ""}`} />
-                    <span className="hidden sm:inline">{tab.label}</span>
+                    <span>{tab.label}</span>
                   </button>
                 );
               })}

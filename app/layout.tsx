@@ -29,7 +29,11 @@ export const metadata: Metadata = {
     description:
       "Family-owned auto repair shop. ASE-certified mechanics, same-day service, honest pricing.",
     type: "website",
-    images: ["/images/og-image.png"],
+    images: ["/images/hero-mechanic.png"],
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/images/favicon-192.png",
   },
 };
 
