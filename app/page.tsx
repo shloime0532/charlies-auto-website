@@ -299,47 +299,39 @@ const PROCESS_STEPS = [
   },
 ];
 
-/* ───────────────────────────── INTERSECTION OBSERVER HOOK ───────────────────────────── */
-
-function useScrollAnimation() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
-    );
-
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
-  return { ref, isVisible };
-}
+/* ───────────────────────────── SCROLL ANIMATION ───────────────────────────── */
 
 function AnimatedSection({
   children,
   className = "",
-  animation = "animate-fade-up",
-  delay = "",
 }: {
   children: React.ReactNode;
   className?: string;
   animation?: string;
   delay?: string;
 }) {
-  const { ref, isVisible } = useScrollAnimation();
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add("animate-fade-up");
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.05, rootMargin: "50px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div
-      ref={ref}
-      className={`${className} ${isVisible ? `${animation} ${delay}` : "opacity-0"}`}
-    >
+    <div ref={ref} className={className}>
       {children}
     </div>
   );
